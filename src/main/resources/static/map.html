@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отображение пути на карте</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<h1>Отображение пути на карте</h1>
+<p>Введите список координат через запятую (широта, долгота):</p>
+<input type="text" id="coordinates" placeholder="Например: 40.7128, -74.0060, 34.0522, -118.2437">
+<button onclick="showPath()">Показать путь</button>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+        function showPath() {
+            // Получение координат из введенного списка
+            var coordinates = document.getElementById('coordinates').value;
+            var coordinateList = coordinates.split(',');
+
+            // Создание карты
+            var map = L.map('map').setView([0, 0], 2);
+
+            // Добавление плитки карты OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Создание массива для хранения точек пути
+            var path = [];
+
+            // Добавление точек пути на карту
+            for (var i = 0; i < coordinateList.length; i += 2) {
+                var lat = parseFloat(coordinateList[i]);
+                var lng = parseFloat(coordinateList[i + 1]);
+                var point = L.latLng(lat, lng);
+                path.push(point);
+                L.marker(point).addTo(map);
+            }
+
+            // Создание пути на карте
+            L.polyline(path, {color: 'red'}).addTo(map);
+        }
+    </script>
+</body>
+</html>

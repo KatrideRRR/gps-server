@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +52,16 @@ public class GpsServerApplication {
         Files.write(path, "".getBytes());
         return "Все записи удалены.";
     }
+
+    @GetMapping("/map")
+    public ModelAndView getMap() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("map.html");
+        return modelAndView;
+    }
+
 }
 //localhost:8080/?coordinate=4509.55219,N,03414.15137,E
 //localhost:8080/getall
 //localhost:8080/deleteall
+//localhost:8080/map
