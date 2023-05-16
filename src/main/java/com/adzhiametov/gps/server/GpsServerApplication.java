@@ -44,6 +44,14 @@ public class GpsServerApplication {
         }
         return result.toString();
     }
+
+    @GetMapping("/deleteall")
+    public String removeCoordinates() throws IOException {
+        Path path = Paths.get("src/main/resources/database.txt");
+        Files.write(path, "".getBytes());
+        return "Все записи удалены.";
+    }
 }
 //localhost:8080/?coordinate=4509.55219,N,03414.15137,E
 //localhost:8080/getall
+//localhost:8080/deleteall
